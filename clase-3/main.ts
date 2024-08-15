@@ -133,10 +133,10 @@ const crearPersonaje = (nombre : string, edad : string, ciudad : string) : Perso
         edad: edad,
         ciudadOrigen: ciudad,
         vida: 100,
-        armadura: 50,
+        armadura: 80,
         ataque: 80,
-        defensa: 40
+        defensa: 95
     }
 }
-console.log (crearPersonaje('valkun', '200 años', 'Mordor' ))
+console.log (crearPersonaje('Obi-Wan Kenobi', '57 años', 'Platena Tatooine' ))
 */
