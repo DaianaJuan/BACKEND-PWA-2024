@@ -1,61 +1,104 @@
 "use strict";
-//La clase Accion incluirá tipos explícitos para sus propiedades.
+/*
 class Accion {
-    constructor(id, descripcion) {
+    id: number;
+    descripcion: string;
+    fecha: Date;
+
+    // constructor de la clase Accion
+    constructor(id: number, descripcion: string) {
         this.id = id;
         this.descripcion = descripcion;
         this.fecha = new Date();
     }
 }
-//La clase Historial también usará tipos explícitos y garantizará que las acciones sean instancias de la clase Accion.
+class Historial {
+    // acciones es un array de objetos de la clase Accion inicializado vacío
+    // proximoId es un entero inicializado en 1. que genera un nuevo id para cada nueva accion
+    acciones: Accion[] = [];
+    proximoId: number = 1;
+
+    // Metodos
+
+    agregarAccion(descripcion: string): void {
+        const nuevaAccion = new Accion(this.proximoId++, descripcion);
+        this.acciones.push(nuevaAccion);
+    }
+
+    eliminarAccionPorID(id: number): void {
+        const index = this.acciones.findIndex(accion => accion.id === id);
+        if (index !== -1) {
+            this.acciones.splice(index, 1);
+            console.log(`Acción con ID ${id} eliminada.`);
+        } else {
+            console.log(`No se encontró acción con ID ${id}.`);
+        }
+    }
+    eliminarTodo(): void {
+        this.acciones = [];
+        console.log("Todas las acciones han sido eliminadas.");
+    }
+    mostrarHistorial(): void {
+        console.log("Historial de acciones:");
+        this.acciones.forEach(accion => {
+            console.log(`ID: ${accion.id}, Descripción: ${accion.descripcion}, Fecha: ${accion.fecha}`);
+        });
+    }
+}
+
+const historial = new Historial();
+historial.agregarAccion("Inicio de sesión");
+historial.agregarAccion("Visualización de perfil");
+historial.mostrarHistorial();
+historial.eliminarAccionPorID(1);
+historial.mostrarHistorial();
+historial.eliminarTodo();
+historial.mostrarHistorial();
+*/
+class Accion {
+    constructor(id, descripcion, fecha) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+    }
+}
 class Historial {
     constructor() {
+        //Esta clase tendrá una propiedad interna para almacenar las acciones en un array.
         this.acciones = [];
+        this.nuevo_id = 1;
     }
-    // Método para agregar una nueva acción al historial
-    agregarAccion(accion) {
-        this.acciones.push(accion);
+    //Metodos
+    agregarAccion(descripcion, fecha) {
+        const nuevaAccion = new Accion(this.nuevo_id++, descripcion, fecha);
+        this.acciones.push(nuevaAccion);
     }
-    // Método para eliminar una acción específica por su ID
     eliminarAccionPorID(id) {
-        this.acciones = this.acciones.filter(accion => accion.id !== id);
+        //Buscar el indice de la accion en las acciones, luego hacer un splice sobre la lista de acciones
+        const indice = this.acciones.findIndex(accion => accion.id === id);
+        if (indice !== -1) {
+            this.acciones.splice(indice, 1);
+        }
+        else {
+            console.error(`No se encontro la accion solicitada con ID ${id}`);
+        }
     }
-    // Método para eliminar todas las acciones del historial
     eliminarTodo() {
         this.acciones = [];
     }
-    // Método para mostrar en la consola todas las acciones en el historial
-    // usar forEach
+    //Método para mostrar en la consola todas las acciones en el historial.
     mostrarHistorial() {
         console.log("Historial de acciones:");
-        if (this.acciones.length === 0) {
-            console.log("No hay acciones en el historial.");
-        }
-        else {
-            this.acciones.forEach(accion => {
-                console.log(`ID: ${accion.id}, Descripción: ${accion.descripcion}, Fecha: ${accion.fecha}`);
-            });
-        }
+        this.acciones.forEach(accion => {
+            console.log(`ID: ${accion.id}, Descripción: ${accion.descripcion}, Fecha: ${accion.fecha}`);
+        });
     }
 }
-//usos
-// Crear una instancia de Historial
-const miHistorial = new Historial();
-// Crear algunas acciones
-const accion1 = new Accion(1, "Usuario inició sesión");
-const accion2 = new Accion(2, "Usuario actualizó su perfil");
-const accion3 = new Accion(3, "Usuario cerró sesión");
-// Agregar acciones al historial
-miHistorial.agregarAccion(accion1);
-miHistorial.agregarAccion(accion2);
-miHistorial.agregarAccion(accion3);
-// Mostrar el historial
-miHistorial.mostrarHistorial();
-// Eliminar una acción por su ID
-miHistorial.eliminarAccionPorID(2);
-// Mostrar el historial actualizado
-miHistorial.mostrarHistorial();
-// Eliminar todas las acciones del historial
-miHistorial.eliminarTodo();
-// Mostrar el historial después de eliminar todo
-miHistorial.mostrarHistorial();
+const historial = new Historial();
+historial.agregarAccion("Inicio de sesión", "10/10/2022");
+historial.agregarAccion("Visualización de perfil", "10/10/2022");
+historial.mostrarHistorial();
+historial.eliminarAccionPorID(1);
+historial.mostrarHistorial();
+historial.eliminarTodo();
+historial.mostrarHistorial();
